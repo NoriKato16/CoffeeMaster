@@ -68,39 +68,63 @@ class _HomePageState extends State<HomePage> {
       // 🔹 Home con cafeteras
       body: GridView.count(
         crossAxisCount: 2,
+        padding: const EdgeInsets.all(8),
+        childAspectRatio: 0.8,
         children: [
-          _coffeeCard(context, "Cafetera Italiana"),
-          _coffeeCard(context, "AeroPress"),
-          _coffeeCard(context, "Prensa Francesa"),
-          _coffeeCard(context, "Nueva cafetera", isNew: true),
+          _coffeeCard(context, "Cafetera Italiana", "assets/CafeteraMoka.jpg"),
+          _coffeeCard(context, "AeroPress", "assets/AeroPress.jpg"),
+          _coffeeCard(context, "Prensa Francesa", "assets/PrensaFrancesa.jpg"),
+          _coffeeCard(context, "Nueva cafetera", "assets/logoCoffeeMaster.jpg", isNew: true),
         ],
       ),
     );
   }
 
   //Widget para mostrar cada cafetera como tarjeta
-  Widget _coffeeCard(BuildContext context, String name, {bool isNew = false}) {
-    return GestureDetector(
-      onTap: () {
-        if (isNew) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const NewCoffeePage()),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => DetailPage(name: name)),
-          );
-        }
-      },
-      child: Card(
-        color: isNew ? Colors.green[200] : Colors.brown[100],
-        child: Center(
-          child: Text(name,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+ Widget _coffeeCard(BuildContext context, String name, String imagePath,
+    {bool isNew = false}) {
+  return GestureDetector(
+    onTap: () {
+      if (isNew) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const NewCoffeePage()),
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => DetailPage(name: name)),
+        );
+      }
+    },
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Card con bordes redondeados + margen
+        Card(
+          margin: const EdgeInsets.all(8), // separación entre cards
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16), // bordes circulares
+          ),
+          clipBehavior: Clip.antiAlias, // recorta la imagen a la forma
+          elevation: 4, // ligera sombra para resaltar
+          child: AspectRatio(
+            aspectRatio: 1, // cuadrada
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.cover, // la imagen llena el espacio
+            ),
+          ),
         ),
-      ),
-    );
-  }
+        const SizedBox(height: 5),
+        // Nombre fuera de la card
+        Text(
+          name,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
+}
+
 }

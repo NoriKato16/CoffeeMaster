@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -61,9 +62,10 @@ flutter:
   uses-material-design: true
  
   assets:
-      - assets/Pixel-Art-Hot-Pepper-2-1.webp
-      - assets/Pixel-Art-Pizza-2.webp
-      - assets/Pixel-Art-Watermelon-3.webp
+      - assets/logoCoffeeMaster.jpg
+      - assets/AeroPress.jpg
+      - assets/CafeteraMoka.jpg
+      - assets/PrensaFrancesa.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
