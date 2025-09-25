@@ -3,6 +3,10 @@ import 'detail.dart';
 import 'newCoffee.dart';
 import 'goodPractice.dart';
 import 'about.dart';
+import 'cItaliana.dart';
+import 'cAeroPress.dart';
+import 'cPrensaFrancesa.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -71,17 +75,17 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(8),
         childAspectRatio: 0.8,
         children: [
-          _coffeeCard(context, "Cafetera Italiana", "assets/CafeteraMoka.jpg"),
-          _coffeeCard(context, "AeroPress", "assets/AeroPress.jpg"),
-          _coffeeCard(context, "Prensa Francesa", "assets/PrensaFrancesa.jpg"),
-          _coffeeCard(context, "Nueva cafetera", "assets/logoCoffeeMaster.jpg", isNew: true),
+          _coffeeCard(context, "Cafetera Italiana", "assets/CafeteraMoka.jpg", ItalianaPage()),
+          _coffeeCard(context, "AeroPress", "assets/AeroPress.jpg", AeroPressPage()),
+          _coffeeCard(context, "Prensa Francesa", "assets/PrensaFrancesa.jpg", PrensaFrancesaPage()),
+          _coffeeCard(context, "Nueva cafetera", "assets/logoCoffeeMaster.jpg", NewCoffeePage(), isNew: true),
         ],
       ),
     );
   }
 
   //Widget para mostrar cada cafetera como tarjeta
- Widget _coffeeCard(BuildContext context, String name, String imagePath,
+Widget _coffeeCard(BuildContext context, String name, String imagePath, Widget page,
     {bool isNew = false}) {
   return GestureDetector(
     onTap: () {
@@ -93,31 +97,29 @@ class _HomePageState extends State<HomePage> {
       } else {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => DetailPage(name: name)),
+          MaterialPageRoute(builder: (_) => page),
         );
       }
     },
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        // Card con bordes redondeados + margen
         Card(
-          margin: const EdgeInsets.all(8), // separación entre cards
+          margin: const EdgeInsets.all(8),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16), // bordes circulares
+            borderRadius: BorderRadius.circular(16),
           ),
-          clipBehavior: Clip.antiAlias, // recorta la imagen a la forma
-          elevation: 4, // ligera sombra para resaltar
+          clipBehavior: Clip.antiAlias,
+          elevation: 4,
           child: AspectRatio(
-            aspectRatio: 1, // cuadrada
+            aspectRatio: 1,
             child: Image.asset(
               imagePath,
-              fit: BoxFit.cover, // la imagen llena el espacio
+              fit: BoxFit.cover,
             ),
           ),
         ),
         const SizedBox(height: 5),
-        // Nombre fuera de la card
         Text(
           name,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -126,5 +128,6 @@ class _HomePageState extends State<HomePage> {
     ),
   );
 }
+
 
 }

@@ -4,12 +4,13 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('About developer')),
+      appBar: AppBar(title: Text('Acerca de la aplicación')),
       body: Center(
         child: Text(
           'Nombre del desarrollador: Noriyuki Kato ',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
+        
       ),
     );
   }

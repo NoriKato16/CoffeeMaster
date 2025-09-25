@@ -24,10 +24,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
       home: const SplashScreen(),
-      //home: const HomePage(title: 'Coffee Master'),
-      //home: ListArtScreen() ,
-      //home: ListCreationScreen(),
-      //home: AboutScreen(),
+  
     );
   }
 }
