@@ -41,21 +41,7 @@ La aplicación permitirá navegar desde home al resto de cafeteras mediante la i
 - Visual Studio Code
 - GitHub : Control de versiones
 
-```mermaid
-DiagramaCoffeeMaster
-    [*] --> Home
-    Home --> About
-    Home --> Nueva_Cafetera
-    Nueva_Cafetera --> Home
-    Home --> Cafetera_Italiana
-    Cafetera_Italiana --> Buenas_practicas
-    Home --> AeroPress
-    AeroPress --> Buenas_practicas
-    Home --> Prensa_Francesa
-    Prensa_Francesa --> Buenas_practicas
-    
-    Home --> [*]
-    
-```
+## Diagrama de flujo de pantallas
+<img width="1118" height="367" alt="DiagramaMoviles" src="https://github.com/user-attachments/assets/a7696691-f1b3-47fd-b174-f78859f97a51" />
 
 
