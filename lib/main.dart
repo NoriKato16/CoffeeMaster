@@ -4,9 +4,12 @@ import 'package:logger/logger.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'pages/home_page.dart'; 
 import 'pages/splashScreen.dart';
+import 'package:flutter/material.dart';
+import 'services/notification_service.dart';
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.instance.init();
   runApp(const MyApp());
 }
 
