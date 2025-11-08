@@ -1,0 +1,7 @@
+[
+  {"id":"age","label":"Edad","type":"number"},
+  {"id":"exp","label":"Años haciendo café","type":"number"},
+  {"id":"fav","label":"Método favorito","type":"choice","options":["Italiana","AeroPress","Prensa Francesa"]},
+  {"id":"notes","label":"Comentarios","type":"text"},
+  {"id":"rating","label":"Satisfacción","type":"slider","min":1,"max":5}
+]

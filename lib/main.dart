@@ -6,11 +6,19 @@ import 'pages/home_page.dart';
 import 'pages/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'services/notification_service.dart';
+import 'providers/ConfigurationData.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.instance.init();
-  runApp(const MyApp());
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ConfigurationData(),
+      child: const MyApp(),
+    ),
+    );
 }
 
 class MyApp extends StatelessWidget {

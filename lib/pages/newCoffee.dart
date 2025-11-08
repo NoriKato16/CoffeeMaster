@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'custom_coffee.dart';
 
 class NewCoffeePage extends StatefulWidget {
@@ -17,7 +19,38 @@ class _NewCoffeePageState extends State<NewCoffeePage> {
   final _imageController = TextEditingController(text: "assets/default.jpg");
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _ratioController.dispose();
+    _moliendaController.dispose();
+    _descController.dispose();
+    _imageController.dispose();
+    super.dispose();
+  }
+
+  bool _isFilePath(String p) {
+    if (p.startsWith('assets/')) return false;
+    return File(p).existsSync();
+  }
+
+  Future<void> _takePhoto() async {
+    final x = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (x == null) return;
+    setState(() => _imageController.text = x.path);
+  }
+
+  Future<void> _pickFromGallery() async {
+    final x = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (x == null) return;
+    setState(() => _imageController.text = x.path);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final img = _isFilePath(_imageController.text)
+        ? Image.file(File(_imageController.text), fit: BoxFit.cover)
+        : Image.asset(_imageController.text, fit: BoxFit.cover);
+
     return Scaffold(
       appBar: AppBar(title: const Text("Nueva Cafetera")),
       body: Padding(
@@ -26,10 +59,37 @@ class _NewCoffeePageState extends State<NewCoffeePage> {
           key: _formKey,
           child: ListView(
             children: [
+              // Preview imagen
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: ColoredBox(color: Colors.black12, child: img),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  FilledButton.icon(
+                    onPressed: _takePhoto,
+                    icon: const Icon(Icons.camera_alt),
+                    label: const Text('Tomar foto'),
+                  ),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: _pickFromGallery,
+                    icon: const Icon(Icons.photo_library),
+                    label: const Text('Galería'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: "Nombre"),
-                validator: (v) => v!.isEmpty ? "Ingresa un nombre" : null,
+                validator: (v) =>
+                    v!.trim().isEmpty ? "Ingresa un nombre" : null,
               ),
               TextFormField(
                 controller: _ratioController,
@@ -46,18 +106,20 @@ class _NewCoffeePageState extends State<NewCoffeePage> {
               ),
               TextFormField(
                 controller: _imageController,
-                decoration: const InputDecoration(labelText: "Ruta de imagen (asset)"),
+                decoration: const InputDecoration(
+                  labelText: "Ruta de imagen (asset o archivo)",
+                ),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     final newCoffee = CustomCoffee(
-                      name: _nameController.text,
-                      ratio: _ratioController.text,
-                      molienda: _moliendaController.text,
-                      descripcion: _descController.text,
-                      imagePath: _imageController.text,
+                      name: _nameController.text.trim(),
+                      ratio: _ratioController.text.trim(),
+                      molienda: _moliendaController.text.trim(),
+                      descripcion: _descController.text.trim(),
+                      imagePath: _imageController.text.trim(),
                     );
                     Navigator.pop(context, newCoffee);
                   }
