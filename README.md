@@ -42,6 +42,32 @@ La aplicación permitirá navegar desde home al resto de cafeteras mediante la i
 - GitHub : Control de versiones
 
 ## Diagrama de flujo de pantallas
-<img width="1118" height="367" alt="DiagramaMoviles" src="https://github.com/user-attachments/assets/a7696691-f1b3-47fd-b174-f78859f97a51" />
+
+```mermaid
+flowchart LR
+  SS[Splash Screen] --> H[Home]
+
+  H --> GP[Good Practices]
+  H --> AB[About]
+  H --> FV[Favorites]
+  H --> RC[Recipes]
+  H --> PR[Preferences]
+  H --> RM[Reminders]
+  H --> MR[Machines Catalog]
+  H <--> NC[New Custom Machine]
+
+  MR --> MD[Machine Detail]
+  MD --> SH1[Share]
+  MD --> ME[Edit Override]
+
+  RC --> RD[Recipe Detail]
+  RD --> RE[Edit Recipe]
+  RD --> SH2[Share]
+  RC --> RCN[New Recipe]
+
+  PR --> P1[Keep screen on]
+  PR --> P2[Home order]
+  PR --> P3[Default machine]
+  PR --> P4[Text size]
 
 
