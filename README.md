@@ -1,45 +1,108 @@
+## Coffee Master
 
-# Coffee Master 
+## Descripción General
 
-## Características
+Aplicación móvil diseñada para asistir en la preparación del café. Ofrece un catálogo de recetas y máquinas, ayudando a baristas y entusiastas a consultar el uso detallado de diversas cafeteras y métodos de preparación. Permite la personalización de recetas, la gestión de favoritos y la contribución de contenido (futuros tutoriales) para compartir conocimiento dentro de la comunidad.
 
-Aplicación desarrollada para consultar el uso de las distintas formas de preparar café en varias cafeteras distintas, de esta forma ayuda a los baristas nuevo a ver como se usa cada máquina y poder tener la información a la mano añadiendo a favoritos las que más va a usar.
-Además de poder compartir y subir sus propios video tutoriales para ayudar a otros baristas.
-
-La aplicación permitirá navegar desde home al resto de cafeteras mediante la interacción en las fotos que contendrá el menú principal, además de tener un submenú lateral donde estará la configuración.
+## Requerimientos Funcionales 
 
 
+- Gestión de Catálogos y Recetas
 
-## Requerimientos funcionales:
+- Consultar el catálogo de cafeteras base desde assets/machines_base.json.
 
-- La aplicación permite agregar cafeteras.
+- Consultar las recetas base con variantes por cafetera desde assets/recipes_base.json.
 
-- La aplicación permite subir fotos de máquinas.
+- Gestión de Recetas (CRUD):
 
-- La aplicación permite compartir la información de las cafeteras.
+- Crear, editar, eliminar y compartir recetas personalizadas con sus variantes.
+
+- Permitir la asociación de una receta a múltiples cafeteras.
+
+- Gestión de Cafeteras Personalizadas:
+
+- Permitir la creación de cafeteras personalizadas desde la aplicación, incluyendo una imagen propia.
+
+- Permitir agregar cafeteras a favoritos.
+
+- Permitir compartir toda la información (cafeteras y recetas) por cualquier aplicación (WhatsApp, etc.), soportando texto e imagen (share_plus).
+
+## Navegación y Uso
+
+- Permitir navegar desde el Home al detalle de las cafeteras mediante la interacción en las fotos del menú principal.
+
+- Disponer de un submenú lateral para acceder a la configuración y otros módulos.
+
+ ## Requerimientos No Funcionales 
+
+- Navegación Fluida: La navegación e interfaz general deben ser fluidas e intuitivas.
+
+- Mantener Pantalla Encendida: La aplicación debe ofrecer la opción de mantener la pantalla encendida durante la preparación de la receta para evitar interrupciones.
+
+- Guía de Buenas Prácticas: La aplicación debe incluir una sección o apartado con la guía de buenas prácticas de preparación de café.
+
+- Información del Proyecto: Debe contar con una pantalla "Acerca de" para obtener información del desarrollador y la aplicación, además de inlcuir una encuesta de satisfacción.
+
+- Persistencia de Datos: Los datos (cafeteras y recetas personalizadas, uso reciente y preferencias) deben ser conservados tras cerrar la aplicación.
+
+- Recordatorios: La aplicación debe ofrecer la gestión de recordatorios (notificaciones locales) para prácticas o tareas.
+
+- Splash Screen: La aplicación debe mostrar una pantalla de bienvenida (Splash screen) con el logo de la aplicación.
+
+ ## Características Técnicas
+
+- Orden del Home: El usuario puede elegir ordenar el Home por uso reciente o alfabético.
+
+- Cafetera por defecto: Permitir definir una cafetera por defecto para la creación de nuevas recetas.
+
+- Tamaño de Texto Global: Ajuste del tamaño de texto en las pantallas de recetas.
+
+ ## Datos y Persistencia
+
+- JSON embebido (Assets)
+
+- assets/machines_base.json: Catálogo base de cafeteras.
+
+- assets/recipes_base.json: Recetas base con variantes por cafetera.
 
 
-## Requerimientos no funcionales:
+- Recetas y variantes editadas: Se guardan en SharedPreferences.
 
-- La aplicación va a tener un apartado de buenas prácticas.
+- Cafeteras personalizadas: Se guardan en SQLite.
 
-- La aplicación va a ofrecer añadir cafeteras favoritas.
+- Uso Reciente: Contador por cafetera en SharedPreferences para ordenar el Home.
 
-- La aplicación va a ofrecer subir vídeos tutoriales.
+- Preferencias: Guardadas en SharedPreferences.
 
-## Características Técnicas
+## Pantallas Principales
 
-- Navegación fluida e intuitiva:
+- Home: Grid de cafeteras base y personalizadas. Acceso a detalle, favoritos y compartir.
 
-- Bases de datos para almacenar las cafeteras y las añadidas por el usuario
+- Detalle de cafetera: Muestra ratio, molienda, instrucciones y permite la edición local.
 
-- Pantalla "acerca de" para obtener información del desarrollador y la aplicación
+- Recetas: Lista plana por variante; permite ver detalle, editar, crear nueva y compartir.
 
-## Tecnologías Utilizadas
-- Flutter : Framework de trabajo
-- Dart : Lenguaje de programación
-- Visual Studio Code
-- GitHub : Control de versiones
+- Buenas prácticas: Guía rápida de consejos.
+
+- Favoritos: Atajos a las cafeteras marcadas.
+
+- Recordatorios: Gestión de notificaciones.
+
+- Preferencias: Pantalla de ajustes descritos en Requerimientos No Funcionales.
+
+- Acerca de: Información del proyecto.
+
+ ## Tecnologías Utilizadas
+
+- Flutter, Dart
+
+- SQLite (persistencia de cafeteras personalizadas)
+
+- SharedPreferences (preferencias y overrides)
+
+- Provider (estado de configuración)
+
+- share_plus, google_fonts, url_launcher (si aplica), flutter_local_notifications o equivalente para notificaciones
 
 ## Diagrama de flujo de pantallas
 
