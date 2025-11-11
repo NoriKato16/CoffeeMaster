@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/ConfigurationData.dart';
 import '../services/SharedPreferencesService.dart';
+import '../services/machines_service.dart';
 
 class PreferencesPage extends StatefulWidget {
   const PreferencesPage({super.key});
-
   @override
   State<PreferencesPage> createState() => _PreferencesPageState();
 }
@@ -11,10 +14,12 @@ class PreferencesPage extends StatefulWidget {
 class _PreferencesPageState extends State<PreferencesPage> {
   final _prefs = SharedPreferencesService();
 
-  String _unit = 'g';
-  double _ratio = 15.0;
-  int? _lastMakerId;
-  final _favIdsCtrl = TextEditingController();
+  bool _keepScreenOn = true;
+  bool _orderByRecent = true;
+  String? _defaultMachineId;                    // puede ser null
+  List<Map<String, dynamic>> _machines = [];
+
+  double _textScale = 1.0;
 
   bool _loading = true;
 
@@ -25,26 +30,31 @@ class _PreferencesPageState extends State<PreferencesPage> {
   }
 
   Future<void> _load() async {
-    final unit = await _prefs.unit();
-    final ratio = await _prefs.defaultRatio();
-    final lastId = await _prefs.lastMakerId();
-    final favIds = await _prefs.favRecipeIds();
+    final machines       = await MachinesRepo.all();
+    final keepScreenOn   = await _prefs.keepScreenOn();
+    final orderByRecent  = await _prefs.orderByRecent();
+    final defaultMachine = await _prefs.defaultMachineId();
+    final textScale      = await _prefs.textScale();
+
     setState(() {
-      _unit = unit;
-      _ratio = ratio;
-      _lastMakerId = lastId;
-      _favIdsCtrl.text = SharedPreferencesService.joinCommaIds(favIds);
+      _machines = machines;
+      _keepScreenOn = keepScreenOn;
+      _orderByRecent = orderByRecent;
+      _defaultMachineId = defaultMachine;       // puede venir null
+      _textScale = textScale.clamp(0.9, 1.4);
       _loading = false;
     });
   }
 
   Future<void> _save() async {
-    await _prefs.setUnit(_unit);
-    await _prefs.setDefaultRatio(_ratio);
-    await _prefs.setLastMakerId(_lastMakerId);
-    await _prefs.setFavRecipeIds(
-      SharedPreferencesService.parseCommaIds(_favIdsCtrl.text),
-    );
+    await _prefs.setKeepScreenOn(_keepScreenOn);
+    await _prefs.setOrderByRecent(_orderByRecent);
+    await _prefs.setDefaultMachineId(_defaultMachineId);
+    await _prefs.setTextScale(_textScale);
+
+    // Notifica para aplicar el cambio global inmediato
+    if (mounted) context.read<ConfigurationData>().setTextScale(_textScale);
+
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Preferencias guardadas')),
@@ -52,83 +62,70 @@ class _PreferencesPageState extends State<PreferencesPage> {
   }
 
   @override
-  void dispose() {
-    _favIdsCtrl.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-   if (_loading) {
-  return Scaffold(
-    appBar: AppBar(title: const Text('Preferencias')),
-    body: const Center(child: CircularProgressIndicator()),
-  );
-}
+    if (_loading) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Preferencias')),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Preferencias')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Unidad
-          const Text('Unidad de medida'),
+          // Mantener pantalla encendida
+          SwitchListTile(
+            title: const Text('Mantener pantalla encendida durante la preparación'),
+            value: _keepScreenOn,
+            onChanged: (v) => setState(() => _keepScreenOn = v),
+          ),
+          const SizedBox(height: 12),
+
+          // Orden Home
+          SwitchListTile(
+            title: const Text('Ordenar inicio por uso reciente'),
+            subtitle: const Text('Desactiva para ordenar alfabéticamente'),
+            value: _orderByRecent,
+            onChanged: (v) => setState(() => _orderByRecent = v),
+          ),
+          const SizedBox(height: 16),
+
+          // Cafetera por defecto
+          const Text('Cafetera por defecto para nuevas recetas'),
           const SizedBox(height: 8),
-          DropdownButtonFormField<String>(
-            value: _unit,
-            items: const [
-              DropdownMenuItem(value: 'g', child: Text('Gramos (g)')),
-              DropdownMenuItem(value: 'ml', child: Text('Mililitros (ml)')),
+          DropdownButtonFormField<String?>(
+            initialValue: _defaultMachineId,     // reemplaza "value" deprecado
+            isExpanded: true,
+            items: [
+              const DropdownMenuItem<String?>(value: null, child: Text('Ninguna')),
+              ..._machines.map((m) => DropdownMenuItem<String?>(
+                    value: m['id'] as String,
+                    child: Text(m['nombre'] as String),
+                  )),
             ],
-            onChanged: (v) => setState(() => _unit = v ?? 'g'),
+            onChanged: (v) => setState(() => _defaultMachineId = v),
           ),
           const SizedBox(height: 24),
 
-          // Ratio por defecto
+          // Tamaño de texto
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Ratio por defecto'),
-              Text(SharedPreferencesService.formatRatio(_ratio)),
+              const Text('Tamaño de texto en recetas'),
+              Text('${(_textScale * 100).round()}%'),
             ],
           ),
           Slider(
-            min: 5,
-            max: 25,
-            divisions: 20,
-            value: _ratio,
-            onChanged: (v) => setState(() => _ratio = v),
+            min: 0.9,
+            max: 1.4,
+            divisions: 10,
+            value: _textScale,
+            onChanged: (v) => setState(() => _textScale = double.parse(v.toStringAsFixed(2))),
           ),
-          const SizedBox(height: 24),
 
-          // Última cafetera
-          const Text('Última cafetera utilizada (ID opcional)'),
-          const SizedBox(height: 8),
-          TextFormField(
-            initialValue: _lastMakerId?.toString() ?? '',
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: 'p. ej. 3',
-              border: OutlineInputBorder(),
-            ),
-            onChanged: (v) => setState(() {
-              _lastMakerId = int.tryParse(v.trim());
-            }),
-          ),
-          const SizedBox(height: 24),
-
-          // Favoritos
-          const Text('IDs de recetas favoritas (separadas por coma)'),
-          const SizedBox(height: 8),
-          TextField(
-            controller: _favIdsCtrl,
-            decoration: const InputDecoration(
-              hintText: '1, 5, 12',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 32),
-
+          const SizedBox(height: 28),
           FilledButton.icon(
             onPressed: _save,
             icon: const Icon(Icons.save),

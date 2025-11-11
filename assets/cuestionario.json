@@ -1,7 +1,18 @@
 [
-  {"id":"age","label":"Edad","type":"number"},
-  {"id":"exp","label":"Años haciendo café","type":"number"},
-  {"id":"fav","label":"Método favorito","type":"choice","options":["Italiana","AeroPress","Prensa Francesa"]},
-  {"id":"notes","label":"Comentarios","type":"text"},
-  {"id":"rating","label":"Satisfacción","type":"slider","min":1,"max":5}
+{"id":"age","label":"Edad (opcional)","type":"number"},
+
+
+{"id":"ease_use","label":"Fue fácil usar la aplicación","type":"slider","min":1,"max":5},
+{"id":"learnability","label":"Aprendí a usarla rápidamente","type":"slider","min":1,"max":5},
+{"id":"navigation","label":"La navegación y estructura son claras","type":"slider","min":1,"max":5},
+{"id":"clarity","label":"Textos, iconos y mensajes son comprensibles","type":"slider","min":1,"max":5},
+{"id":"error_recovery","label":"El contenido base es útil","type":"slider","min":1,"max":5},
+{"id":"performance","label":"El rendimiento fue fluido","type":"slider","min":1,"max":5},
+{"id":"consistency","label":"La interfaz es consistente a lo largo de la app","type":"slider","min":1,"max":5},
+{"id":"trust","label":"Mis preferencias quedan bien guardadas","type":"slider","min":1,"max":5},
+{"id":"accessibility","label":"El tamaño de letra y contrastes fueron adecuados","type":"slider","min":1,"max":5},
+{"id":"satisfaction","label":"Satisfacción general con la experiencia","type":"slider","min":1,"max":5},
+{"id":"nps","label":"Probabilidad de recomendar la app a otra persona","type":"slider","min":0,"max":10},
+
+{"id":"notes","label":"Comentario libre (sugerencia o queja)","type":"text"}
 ]

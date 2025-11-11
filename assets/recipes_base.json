@@ -1,0 +1,545 @@
+{
+  "schemaVersion": 2,
+  "recipes": [
+    {
+      "id": "espresso",
+      "titulo": "Espresso",
+      "tags": [
+        "base",
+        "intenso"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:2",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 25,
+          "rendimiento_ml": 30,
+          "pasos": [
+            "Dosifica 18 gramos de café en el portafiltro. Distribuye uniformemente (nivelar) para una extracción homogénea.",
+            "Apisona (tampea) el café con presión firme y asegúrate de que quede perfectamente nivelado y horizontal.",
+            "Inicia la extracción y detenla al alcanzar 36 gramos de líquido, lo cual debe ocurrir en un tiempo total de 25 a 30 segundos.",
+            "Si la extracción es muy rápida (ácida) o muy lenta (amarga), ajusta la molienda (más fina o más gruesa, respectivamente) para corregir el tiempo."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:6 (concentrado) \\rightarrow ajustar en taza",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 330,
+          "rendimiento_ml": 25,
+          "pasos": [
+            "Prepara la Moka extrayendo un concentrado de café de aproximadamente 25 y 35 ml. Usa agua caliente en la base para acelerar.",
+            "Sirve el concentrado directo en una taza pequeña (tipo espresso).",
+            "Prueba. Si el resultado es muy intenso, puedes añadir entre 5 y 10 ml de agua caliente para suavizar ligeramente."
+          ]
+        },
+        {
+          "machine_id": "aeropress",
+          "ratio": "1:3",
+          "molienda": "fina",
+          "agua_c": 85,
+          "tiempo_s": 120,
+          "rendimiento_ml": 35,
+          "pasos": [
+            "Añade el café fino en el AeroPress (modo invertido recomendado). Vierte agua a 85 grados hasta alcanzar el ratio 1:3 para una alta concentración.",
+            "Mezcla vigorosamente durante 10 segundos para saturar. Infusiona por un total de 60 a 90 segundos.",
+            "Presiona el émbolo suavemente durante 30 a 40 segundos.",
+            "Detén el prensado justo al escuchar el sonido de aire, para evitar forzar sedimentos que causen amargor."
+          ]
+        },
+        {
+          "machine_id": "french_press",
+          "ratio": "1:7",
+          "molienda": "media",
+          "agua_c": 96,
+          "tiempo_s": 90,
+          "rendimiento_ml": 30,
+          "pasos": [
+            "Vierte el agua muy caliente (aproximado 96 grados) sobre el café de molienda media, respetando el ratio 1:7 para un concentrado.",
+            "A los 45 segundos, rompe la costra (capa flotante) y remueve suavemente.",
+            "A los 90 segundos totales, presiona el émbolo hasta la mitad o menos, y sirve inmediatamente. ",
+            "Objetivo: Obtener entre 25 y 35 ml de concentrados."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "americano",
+      "titulo": "Americano",
+      "tags": [
+        "ligero"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:2",
+          "molienda": "fina",
+          "agua_c": 92,
+          "tiempo_s": 28,
+          "rendimiento_ml": 150,
+          "pasos": [
+            "Prepara y extrae un espresso (aprox 30ml) directamente en la taza.",
+            "Añade entre 90 y 120 ml de agua caliente a 90 grados, al espresso y mezcla suavemente."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:1",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 330,
+          "rendimiento_ml": 180,
+          "pasos": [
+            "Extrae el café concentrado de la cafetera Moka.",
+            "Diluye el concentrado con agua caliente, utilizando una proporción de 1 parte de moka por 1 a 2 partes de agua, hasta obtener la suavidad deseada."
+          ]
+        },
+        {
+          "machine_id": "french_press",
+          "ratio": "1:12",
+          "molienda": "gruesa",
+          "agua_c": 94,
+          "tiempo_s": 300,
+          "rendimiento_ml": 200,
+          "pasos": [
+            "Prepara una Prensa Francesa estándar y equilibrada (5 minutos de infusión).",
+            "Sirve el café. Si se desea un Americano más suave, añade un volumen de agua caliente adicional igual al volumen de café extraído (dilución 1:1)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cappuccino",
+      "titulo": "Cappuccino",
+      "tags": [
+        "leche",
+        "equilibrado"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:2",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 28,
+          "rendimiento_ml": 150,
+          "pasos": [
+            "Prepara y extrae un espresso sencillo (ratio 1:2) en una taza de cappuccino.",
+            "Vaporiza 120 ml de leche fría a 50 o 60 grados generando microespuma (con volumen de aire).",
+            "Vierte la leche centrada sobre el espresso, buscando la proporción clásica 1:1:1 de espresso, leche líquida y espuma."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:3",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 360,
+          "rendimiento_ml": 160,
+          "pasos": [
+            "Extrae 30-40ml de café moka concentrada y sírvela en la taza.",
+            "Calienta y espuma 120 ml de leche a 55 o 60 grados (puedes usar un espumador manual o la propia prensa francesa).",
+            "Vierte la leche vaporizada sobre la moka, asegurando una buena textura de espuma en la superficie."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "latte",
+      "titulo": "Latte",
+      "tags": [
+        "leche",
+        "suave"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:2",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 28,
+          "rendimiento_ml": 240,
+          "pasos": [
+            "Prepara y extrae un espresso sencillo en el vaso o taza de Latte.",
+            "Vaporiza 180 o 200 ml de leche buscando una microespuma muy fina y sedosa (poca incorporación de aire).",
+            "Vierte la leche lentamente, asegurando que solo quede una capa muy delgada de espuma en la parte superior."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:3",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 360,
+          "rendimiento_ml": 240,
+          "pasos": [
+            "Extrae el concentrado de moka 30 o 40 ml.",
+            "Calienta 180 o 200 ml de leche y espúmala muy suavemente (microespuma mínima).",
+            "Mezcla la moka con la leche manteniendo la textura sedosa de esta última."
+          ]
+        },
+        {
+          "machine_id": "french_press",
+          "ratio": "1:12",
+          "molienda": "gruesa",
+          "agua_c": 94,
+          "tiempo_s": 300,
+          "rendimiento_ml": 270,
+          "pasos": [
+            "Prepara 150 ml de café en la prensa francesa con un ratio 1:12.",
+            "Calienta 120 o 150 ml de leche y utiliza la prensa limpia para espumarla moviendo el émbolo.",
+            "Mezcla el café de prensa con la leche espumada suavemente buscando un resultado lácteo."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flat_white",
+      "titulo": "Flat White",
+      "tags": [
+        "leche",
+        "intenso"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:2",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 28,
+          "rendimiento_ml": 180,
+          "pasos": [
+            "Prepara un doble espresso (ratio 1:2) en una taza de 180 ml.",
+            "Vaporiza 120 o 140 ml de leche a 55 o 60 grados con una microespuma muy fina (poca aireación).",
+            "Vierte la leche vaporizada con la jarra baja y de forma continua para que la espuma quede apenas visible o 'plana'."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:2",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 360,
+          "rendimiento_ml": 190,
+          "pasos": [
+            "Extrae 60 o 70 ml de moka concentrada (equivalente a un doble espresso en volumen).",
+            "Calienta la leche 120 o 140 ml y crea una microespuma muy fina (textura sedosa).",
+            "Vierte la leche sobre el concentrado de moka buscando una integración total del café y la leche."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mocha",
+      "titulo": "Mocaccino (Mocha)",
+      "tags": [
+        "dulce",
+        "chocolate"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:12",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 28,
+          "rendimiento_ml": 240,
+          "pasos": [
+            "Coloca 15 o 25 gramos de cacao en polvo o sirope de chocolate en el fondo de la taza. Disuélvelo con un poco de leche caliente.",
+            "Extrae el espresso directamente sobre la mezcla de cacao y mézclalo bien.",
+            "Vaporiza 180 ml de leche y completa la taza con la leche y microespuma."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:12",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 360,
+          "rendimiento_ml": 240,
+          "pasos": [
+            "Extrae el concentrado de moka 30 o 40 ml.",
+            "En la taza, mezcla el cacao con una porción de leche caliente hasta su total disolución.",
+            "Añade la moka a la mezcla de chocolate y completa con el resto de la leche caliente."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "caramel_macchiato",
+      "titulo": "Caramel Macchiato",
+      "tags": [
+        "dulce",
+        "leche"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:15",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 28,
+          "rendimiento_ml": 300,
+          "pasos": [
+            "Poner 15 o 25 ml de sirope de vainilla (o base) en el fondo del vaso.",
+            "Vaporiza 200-220 ml de leche a 60 grados con una fina capa de espuma y viértela sobre el sirope.",
+            "Extrae un espresso y viértelo lentamente por encima ('manchar') para que flote sobre la leche espumada.",
+            "Salsea con caramelo al gusto para decorar."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:15",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 360,
+          "rendimiento_ml": 300,
+          "pasos": [
+            "Calienta 220 ml de leche y mézclala con el sirope de vainilla en el vaso.",
+            "Extrae 30-40 ml de moka concentrada y viértela cuidadosamente por arriba para 'manchar' la superficie.",
+            "Salsea con caramelo al gusto."
+          ]
+        },
+        {
+          "machine_id": "french_press",
+          "ratio": "1:12",
+          "molienda": "gruesa",
+          "agua_c": 94,
+          "tiempo_s": 300,
+          "rendimiento_ml": 300,
+          "pasos": [
+            "Prepara 150 ml de café en la prensa francesa con un ratio 1:12 (5 minutos de infusión).",
+            "Calienta 120-150ml de leche y mézclala con el sirope.",
+            "Mezcla el café y la leche con sirope. Puedes usar la propia prensa para generar una espuma ligera antes de verter la leche (opcional)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "espresso_macchiato",
+      "titulo": "Espresso macchiato",
+      "tags": [
+        "intenso"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1:2",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 25,
+          "rendimiento_ml": 40,
+          "pasos": [
+            "Prepara y extrae un espresso simple.",
+            "Vaporiza leche y, con una cuchara, corona el espresso con una pequeña 'mancha' de 10-20 ml de espuma de leche densa (sin leche líquida)."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1:3",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 330,
+          "rendimiento_ml": 50,
+          "pasos": [
+            "Sirve 30-40 ml de moka concentrada en una taza pequeña.",
+            "Añade una 'mancha' de 10-20ml de espuma de leche en el centro."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "affogato",
+      "titulo": "Affogato",
+      "tags": [
+        "postre"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "espresso_machine",
+          "ratio": "1 bola helado + 1 espresso",
+          "molienda": "fina",
+          "agua_c": 93,
+          "tiempo_s": 25,
+          "rendimiento_ml": 120,
+          "pasos": [
+            "Coloca 1 bola de helado de vainilla (o el sabor de tu elección) en una copa o tazón.",
+            "Extrae un espresso caliente 30 ml y viértelo inmediatamente encima del helado para que se derrita ligeramente."
+          ]
+        },
+        {
+          "machine_id": "moka",
+          "ratio": "1 bola helado + 30-40 ml de moka",
+          "molienda": "media_fina",
+          "agua_c": 92,
+          "tiempo_s": 330,
+          "rendimiento_ml": 120,
+          "pasos": [
+            "Sirve 1 bola de helado en una copa.",
+            "Extrae 30-40 ml de moka concentrada y viértela caliente sobre el helado."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "filtro_claro",
+      "titulo": "Café filtrado claro",
+      "tags": [
+        "brillante",
+        "aromático"
+      ],
+      "dificultad": "media",
+      "variantes": [
+        {
+          "machine_id": "v60",
+          "ratio": "1:16",
+          "molienda": "media",
+          "agua_c": 94,
+          "tiempo_s": 200,
+          "rendimiento_ml": 300,
+          "pasos": [
+            "Prepara el filtro. Realiza el Bloom: vierte el doble de agua de la dosis de café y deja reposar 30-45 segundos.",
+            "Vierte el resto del agua en pulsos controlados y continuos desde el centro hacia afuera, manteniendo el nivel de agua constante.",
+            "El tiempo total de extracción debe finalizar entre 2:45 y 3:15 minutos."
+          ]
+        },
+        {
+          "machine_id": "kalita_wave",
+          "ratio": "1:15",
+          "molienda": "media",
+          "agua_c": 93,
+          "tiempo_s": 180,
+          "rendimiento_ml": 300,
+          "pasos": [
+            "Prepara el filtro. Realiza un Bloom corto aproximado 30 segundos.",
+            "Realiza vertidos cortos y regulares concentrados en el centro de la cama de café (la base plana de Kalita favorece la uniformidad).",
+            "El objetivo es finalizar la extracción alrededor de 3:00 minutos totales."
+          ]
+        },
+        {
+          "machine_id": "chemex",
+          "ratio": "1:16",
+          "molienda": "media",
+          "agua_c": 94,
+          "tiempo_s": 260,
+          "rendimiento_ml": 600,
+          "pasos": [
+            "Prepara el filtro. Realiza el Bloom (pre-infusión) y déjalo reposar por 45 segundos.",
+            "Realiza **vertidos circulares y constantes** en pulsos grandes (sin mojar los bordes del filtro).",
+            "El tiempo de extracción total es más largo 4-5 minutos para una taza excepcionalmente limpia y brillante."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aeropress_estandar",
+      "titulo": "AeroPress taza limpia",
+      "tags": [
+        "limpio",
+        "rápido"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "aeropress",
+          "ratio": "1:16",
+          "molienda": "media_fina",
+          "agua_c": 85,
+          "tiempo_s": 180,
+          "rendimiento_ml": 220,
+          "pasos": [
+            "Enjuaga el filtro con agua caliente y desecha el agua.",
+            "Añade el café (molienda media-fina) y vierte el agua a 85 grados hasta alcanzar el ratio 1:16. Mezcla suavemente 5 veces.",
+            "Espera 2 minutos de infusión.",
+            "Presiona el émbolo de manera constante durante 20-30 segundos hasta escuchar el 'hiss' y detente."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prensa_equilibrada",
+      "titulo": "Prensa francesa equilibrada",
+      "tags": [
+        "cuerpo_alto",
+        "suave"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "french_press",
+          "ratio": "1:15",
+          "molienda": "gruesa",
+          "agua_c": 94,
+          "tiempo_s": 540,
+          "rendimiento_ml": 350,
+          "pasos": [
+            "Añade el café de molienda gruesa y vierte el agua a 95 grados hasta el ratio 1:15. Coloca la tapa (sin presionar el émbolo).",
+            "Espera 4-5 minutos y luego rompe la costra (la capa de café flotante) con una cuchara.",
+            "Deja reposar 5 minutos más para que los sedimentos se asienten.",
+            "Presiona el émbolo muy lento sin llegar hasta el fondo para evitar arrastrar sedimentos. Sirve inmediatamente."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phin_sua_da",
+      "titulo": "Phin vietnamita",
+      "tags": [
+        "dulce",
+        "frío"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "phin",
+          "ratio": "1:12",
+          "molienda": "media_gruesa",
+          "agua_c": 92,
+          "tiempo_s": 320,
+          "rendimiento_ml": 220,
+          "pasos": [
+            "En un vaso alto, vierte 20-30 gramos de leche condensada y añade hielo.",
+            "Coloca el filtro Phin. Añade café, asienta ligeramente con un chorrito de agua (pre-infusión), y luego completa con agua a 90 grados",
+            "Deja que el café gotee completamente 4-6 minutos. Una vez listo, retira el Phin, mezcla el café con la leche condensada y sirve."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cold_brew_listo",
+      "titulo": "Cold Brew listo para beber",
+      "tags": [
+        "frío",
+        "suave"
+      ],
+      "dificultad": "fácil",
+      "variantes": [
+        {
+          "machine_id": "cold_brew",
+          "ratio": "1:12",
+          "molienda": "gruesa",
+          "agua_c": 20,
+          "tiempo_s": 54000,
+          "rendimiento_ml": 900,
+          "pasos": [
+            "En un recipiente, mezcla el café de molienda gruesa con agua fría (ratio 1:12). Asegúrate de que todo el café esté saturado.",
+            "Tapa el recipiente y refrigéralo en la nevera por un periodo de 12 a 15 horas.",
+            "Filtra el concentrado Cold Brew a través de un filtro fino (papel, tela, o malla) para eliminar todos los sedimentos y sírvelo con hielo."
+          ]
+        }
+      ]
+    }
+  ]
+}

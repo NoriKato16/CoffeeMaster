@@ -1,12 +1,9 @@
-import 'package:flutter/material.dart';
-
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'newCoffee.dart';
 import 'goodPractice.dart';
 import 'about.dart';
-import 'cItaliana.dart';
-import 'cAeroPress.dart';
-import 'cPrensaFrancesa.dart';
 import 'favorite.dart';
 import 'coffee_favorite.dart';
 import 'custom_coffee.dart';
@@ -16,7 +13,8 @@ import 'reminders_page.dart';
 import 'recipes_page.dart';
 import '../data/database.dart';
 import '../services/SharedPreferencesService.dart' as sp;
-import 'package:share_plus/share_plus.dart';
+import '../services/machines_service.dart';
+import 'machine_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -30,59 +28,64 @@ class _HomePageState extends State<HomePage> {
   final _prefs = sp.SharedPreferencesService();
 
   List<CoffeeFavorite> favorites = [];
-  List<CustomCoffee> customCoffees = [];
 
-  // Cafeteras base
-  final List<Map<String, Object?>> _builtIns = [
-    {
-      'id': 1,
-      'name': 'Cafetera Italiana',
-      'image': 'assets/CafeteraMoka.jpg',
-      'page': ItalianaPage(),
-    },
-    {
-      'id': 2,
-      'name': 'AeroPress',
-      'image': 'assets/AeroPress.jpg',
-      'page': AeroPressPage(),
-    },
-    {
-      'id': 3,
-      'name': 'Prensa Francesa',
-      'image': 'assets/PrensaFrancesa.jpg',
-      'page': PrensaFrancesaPage(),
-    },
-  ];
-  Widget _buildImage(String path) {
-    if (_isAsset(path)) return Image.asset(path, fit: BoxFit.cover);
-    return Image.asset(
-      path,
-      fit: BoxFit.cover,
-      errorBuilder: (_, __, ___) {
-        // si NO es asset, intenta como archivo
-        return Image.file(
-          File(path),
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => const ColoredBox(color: Colors.black12),
-        );
-      },
-    );
+  @override
+  void initState() {
+    super.initState();
   }
 
-  bool _isAsset(String p) => p.startsWith('assets/');
+ 
+  Future<Map<String, Object>> _loadHome() async {
+    final orderRecent = await _prefs.orderByRecent();
 
-  Future<List<Map<String, Object?>>> _rankedBuiltIns() async {
-    final list = [..._builtIns];
-    for (final m in list) {
-      final id = m['id'] as int;
-      final usage = await _prefs.getUsageCount('$id'); // usage_1, usage_2, ...
-      m['usage'] = usage;
+    
+    final machines = (await MachinesRepo.all())
+        .map((m) => Map<String, Object?>.from(m))
+        .toList();
+
+    if (orderRecent) {
+      for (final m in machines) {
+        final id = (m['id'] ?? '').toString(); 
+        m['usage'] = await _prefs.getUsageCount(id);
+      }
+      machines.sort((a, b) =>
+          ((b['usage'] as int?) ?? 0).compareTo(((a['usage'] as int?) ?? 0)));
+    } else {
+      machines.sort((a, b) => (a['nombre'] as String)
+          .toLowerCase()
+          .compareTo((b['nombre'] as String).toLowerCase()));
     }
-    list.sort(
-      (a, b) =>
-          ((b['usage'] as int?) ?? 0).compareTo(((a['usage'] as int?) ?? 0)),
-    );
-    return list;
+
+
+    final rows = await AppDb.instance.getAllMakers();
+    final customs = rows
+        .map((m) => CustomCoffee(
+              name: (m['name'] ?? '') as String,
+              ratio: (m['ratio'] ?? '') as String,
+              molienda: (m['molienda'] ?? '') as String,
+              descripcion: (m['descripcion'] ?? '') as String,
+              imagePath: (m['imagePath'] ?? 'assets/default.jpg') as String,
+            ))
+        .toList();
+
+    if (orderRecent) {
+    
+      final usages = <int>[];
+      for (var i = 0; i < customs.length; i++) {
+        final id = 'user_${1000 + i}';
+        usages.add(await _prefs.getUsageCount(id));
+      }
+      customs.sort((a, b) {
+        final ia = customs.indexOf(a);
+        final ib = customs.indexOf(b);
+        return usages[ib].compareTo(usages[ia]);
+      });
+    } else {
+      customs.sort((a, b) =>
+          a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    }
+
+    return {'machines': machines, 'customs': customs};
   }
 
   @override
@@ -94,132 +97,114 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const PreferencesPage()),
               );
+              if (mounted) setState(() {}); // recargar orden
             },
           ),
         ],
       ),
 
-      // Drawer
       drawer: Drawer(
         child: ListView(
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(color: Colors.brown),
-              child: Text(
-                "Menú",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              child: Text('Menú', style: TextStyle(color: Colors.white, fontSize: 20)),
             ),
             ListTile(
-              title: const Text("Recetas"),
+              title: const Text('Recetas'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const RecipesPage()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const RecipesPage()));
               },
             ),
             ListTile(
-              title: const Text("Buenas prácticas"),
+              title: const Text('Buenas prácticas'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const GoodPracticesPage()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const GoodPracticesPage()));
               },
             ),
-
             ListTile(
-              title: const Text("Favoritos"),
+              title: const Text('Favoritos'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => FavoritesPage(favorites: favorites),
-                  ),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (_) => FavoritesPage(favorites: favorites)));
               },
             ),
             ListTile(
-              title: const Text("Recordatorios"),
+              title: const Text('Recordatorios'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const RemindersPage()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (_) => const RemindersPage()));
               },
             ),
             ListTile(
-              title: const Text("Preferencias"),
-              onTap: () {
+              title: const Text('Preferencias'),
+              onTap: () async {
                 Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const PreferencesPage()),
-                );
+                await Navigator.push(context, MaterialPageRoute(builder: (_) => const PreferencesPage()));
+                if (mounted) setState(() {}); // recargar orden
               },
             ),
             ListTile(
-              title: const Text("Acerca de"),
+              title: const Text('Acerca de'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => AboutScreen()),
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (_) => AboutScreen()));
               },
             ),
           ],
         ),
       ),
 
-      // Home con cafeteras ordenadas por uso
-      body: FutureBuilder<List<Map<String, Object?>>>(
-        future: _rankedBuiltIns(),
+      body: FutureBuilder<Map<String, Object>>(
+        future: _loadHome(),
         builder: (ctx, snap) {
-          final ranked = snap.data ?? _builtIns;
+          if (!snap.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final machines = (snap.data!['machines'] as List).cast<Map<String, Object?>>();
+          final customs  = (snap.data!['customs']  as List).cast<CustomCoffee>();
 
           final children = <Widget>[
-            // base ordenadas por uso
-            ...ranked.map(
-              (m) => _coffeeCard(
-                context,
-                m['id'] as int,
-                m['name'] as String,
-                m['image'] as String,
-                m['page'] as Widget,
-                onTapBeforeNavigate: () async {
-                  await _prefs.bumpUsage('${m['id']}');
-                  await _prefs.setLastMakerId(m['id'] as int);
-                },
-                shareText: 'Cafetera: ${m['name']}',
-              ),
-            ),
-            // cafeteras agregadas por el usuario
-            ...customCoffees.asMap().entries.map((e) {
-              final idx = e.key;
-              final c = e.value;
-              final customId = 1000 + idx; // ID
-              final shareTxt =
-                  '''
-                Cafetera: ${c.name}
-                Ratio: ${c.ratio}
-                Molienda: ${c.molienda}
-
-                ${c.descripcion}
-                 ''';
+            // Catálogo base
+            ...machines.map((m) {
+              final id    = (m['id'] ?? '').toString();
+              final name  = (m['nombre'] ?? '').toString();
+              final image = ((m['image'] ?? m['image_uri']) ?? 'assets/default.jpg').toString();
               return _coffeeCard(
                 context,
-                customId,
-                c.name,
-                c.imagePath,
-                CoffeeDetailPage(
+                id: id,
+                name: name,
+                imagePath: image,
+                page: MachineDetailPage(machine: m),
+                onTapBeforeNavigate: () async {
+                  await _prefs.bumpUsage(id);
+                },
+                shareText: _machineShareText(m),
+              );
+            }),
+
+            // Custom del usuario
+            ...customs.asMap().entries.map((e) {
+              final idx = e.key;
+              final c   = e.value;
+              final customId = 'user_${1000 + idx}';
+              final shareTxt = '''
+              Cafetera: ${c.name}
+              Ratio: ${c.ratio}
+              Molienda: ${c.molienda}
+
+              ${c.descripcion}
+              ''';
+              return _coffeeCard(
+                context,
+                id: customId,
+                name: c.name,
+                imagePath: c.imagePath,
+                page: CoffeeDetailPage(
                   name: c.name,
                   ratio: c.ratio,
                   molienda: c.molienda,
@@ -227,8 +212,7 @@ class _HomePageState extends State<HomePage> {
                   imagePath: c.imagePath,
                 ),
                 onTapBeforeNavigate: () async {
-                  await _prefs.bumpUsage('$customId');
-                  await _prefs.setLastMakerId(customId);
+                  await _prefs.bumpUsage(customId);
                 },
                 shareText: shareTxt,
                 shareFilePath: c.imagePath,
@@ -245,10 +229,9 @@ class _HomePageState extends State<HomePage> {
         },
       ),
 
-      // Botón de nueva cafetera
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.brown,
-        tooltip: "Nueva cafetera",
+        tooltip: 'Nueva cafetera',
         child: const Icon(Icons.add, color: Colors.white),
         onPressed: () async {
           final newCoffee = await Navigator.push(
@@ -257,22 +240,28 @@ class _HomePageState extends State<HomePage> {
           );
 
           if (newCoffee != null && newCoffee is CustomCoffee) {
-            setState(() {
-              customCoffees.add(newCoffee);
+            await AppDb.instance.insertMaker({
+              'name': newCoffee.name,
+              'ratio': newCoffee.ratio,
+              'molienda': newCoffee.molienda,
+              'descripcion': newCoffee.descripcion,
+              'imagePath': newCoffee.imagePath,
             });
+            if (mounted) setState(() {}); // recargar lista
           }
         },
       ),
     );
   }
 
-  // Tarjeta de cafetera
+
+
   Widget _coffeeCard(
-    BuildContext context,
-    int id,
-    String name,
-    String imagePath,
-    Widget page, {
+    BuildContext context, {
+    required String id,
+    required String name,
+    required String imagePath,
+    required Widget page,
     bool isNew = false,
     Future<void> Function()? onTapBeforeNavigate,
     String? shareText,
@@ -282,14 +271,9 @@ class _HomePageState extends State<HomePage> {
       onTap: () async {
         if (isNew) return;
         if (onTapBeforeNavigate != null) await onTapBeforeNavigate();
-
-        // Refresca AHORA para reordenar
-        if (mounted) setState(() {});
-
+        if (mounted) setState(() {}); // actualizar orden por uso
         await Navigator.push(context, MaterialPageRoute(builder: (_) => page));
-
-        // Y refresca al volver también
-        if (mounted) setState(() {});
+        if (mounted) setState(() {}); // refrescar al volver
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -298,17 +282,15 @@ class _HomePageState extends State<HomePage> {
             children: [
               Card(
                 margin: const EdgeInsets.all(8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                 clipBehavior: Clip.antiAlias,
                 elevation: 4,
                 child: AspectRatio(
                   aspectRatio: 1,
-                  child: _buildImage(imagePath), // ver helper abajo
+                  child: _buildImage(imagePath),
                 ),
               ),
-              // Fav a la derecha
+              // Favoritos
               Positioned(
                 right: 12,
                 top: 12,
@@ -317,7 +299,7 @@ class _HomePageState extends State<HomePage> {
                     favorites.any((c) => c.name == name)
                         ? Icons.favorite
                         : Icons.favorite_border,
-                    color: Colors.red,
+                    color: Colors.brown,
                   ),
                   onPressed: () {
                     setState(() {
@@ -330,7 +312,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              // Compartir a la izquierda
+              // Compartir
               Positioned(
                 left: 12,
                 top: 12,
@@ -348,14 +330,37 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-
           const SizedBox(height: 5),
-          Text(
-            name,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+          Text(name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         ],
       ),
     );
   }
+
+  String _machineShareText(Map<String, Object?> m) {
+    final pasos = ((m['pasos'] as List?)?.cast<String>() ?? const []);
+    return [
+      'Cafetera: ${m['nombre']}',
+      if ((m['ratio_hint'] ?? '').toString().isNotEmpty)
+        'Ratio sugerido: ${m['ratio_hint']}',
+      if ((m['molienda'] ?? '').toString().isNotEmpty)
+        'Molienda: ${m['molienda']}',
+      'Cómo usarla:',
+      ...pasos.map((p) => '• $p'),
+    ].join('\n');
+  }
+
+  Widget _buildImage(String path) {
+    if (_isAsset(path)) {
+      return Image.asset(path, fit: BoxFit.cover);
+    }
+    // archivo del sistema
+    return Image.file(
+      File(path),
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => const ColoredBox(color: Colors.black12),
+    );
+  }
+
+  bool _isAsset(String p) => p.startsWith('assets/');
 }

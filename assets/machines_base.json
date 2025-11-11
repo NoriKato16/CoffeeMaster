@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "machines": [
+    {
+      "id": "moka",
+      "nombre": "Cafetera italiana (Moka)",
+      "ratio_min": 7,
+      "ratio_max": 10,
+      "molienda": [
+        "fina",
+        "media_fina"
+      ],
+      "pasos": [
+        "Llena el recipiente inferior (caldera) con agua previamente calentada a 90 grados hasta justo por debajo de la válvula de seguridad (no cubrirla).",
+        "Coloca el café de molienda media-fina en el canastillo. No lo compactes, simplemente nivela la superficie con el dedo.",
+        "Ensambla la parte superior con la inferior utilizando un paño o guante para evitar quemarte con el agua caliente.",
+        "Coloca la Moka a fuego bajo o medio-bajo. La extracción debe ser lenta. Cuando el café comience a subir a la cámara superior y escuches un sonido de burbujeo/soplido, retira la cafetera inmediatamente** del fuego.",
+        "Para detener la extracción y el riesgo de amargor, enfría la base (recipiente inferior) bajo el chorro de agua fría o con un paño húmedo. Sirve de inmediato el café extraído."
+      ],
+      "image_uri": "asset://assets/images/machines/CafeteraMoka.jpg",
+      "image_source": "asset",
+      "image_alt": "Cafetera italiana Moka",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "french_press",
+      "nombre": "Prensa francesa",
+      "ratio_min": 12,
+      "ratio_max": 18,
+      "molienda": [
+        "gruesa"
+      ],
+      "pasos": [
+        "Vierte el café de molienda gruesa en el fondo de la prensa (usa un ratio entre 1:12 y 1:18).",
+        "Vierte el doble de agua caliente a aproximadamente 94 grados que de café para la pre-infusión. Después de 30 segundos, añade el resto del agua. Tapa y deja reposar 4-5 minutos.",
+        "A los 4-5 minutos, usa una cuchara para romper la costra de café formada en la superficie y retira cualquier espuma o grano flotante si lo deseas.",
+        "Vuelve a tapar la prensa y deja reposar por 5 minutos adicionales para que las partículas finas se asienten en el fondo.",
+        "Baja el émbolo muy lentamente y suavemente hasta justo el nivel del café/agua, sin llegar al fondo, para evitar levantar sedimentos. Sirve todo el café inmediatamente."
+      ],
+      "image_uri": "asset://assets/images/machines/PrensaFrancesa.jpg",
+      "image_source": "asset",
+      "image_alt": "Prensa francesa",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "aeropress",
+      "nombre": "AeroPress",
+      "ratio_min": 15,
+      "ratio_max": 17,
+      "molienda": [
+        "media_fina"
+      ],
+      "pasos": [
+        "Inserta un filtro de papel en la tapa. Enjuaga el filtro con agua caliente para eliminar el sabor a papel y ensambla la AeroPress (modo invertido o estándar).",
+        "Añade el café de molienda media-fina. Vierte el agua a la temperatura deseada aproximadamente 85 grados hasta el volumen requerido (ratio 1:15 a 1:17).",
+        "Revuelve suavemente unas 5 veces para asegurar la saturación uniforme de todo el café.",
+        "Coloca el pistón en su lugar (creando un sello de vacío) y deja reposar por 2 a 3 minutos (tiempo total de infusión).",
+        "Gira (si usas modo invertido) y presiona el pistón con una presión constante y firme durante 20-30 segundos hasta que escuches el sonido de aire y retira."
+      ],
+      "image_uri": "asset://assets/images/machines/AeroPress.jpg",
+      "image_source": "asset",
+      "image_alt": "AeroPress",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "v60",
+      "nombre": "V60 (cono)",
+      "ratio_min": 15,
+      "ratio_max": 17,
+      "molienda": [
+        "media"
+      ],
+      "pasos": [
+        "Coloca el filtro en el V60. Enjuágalo completamente con agua caliente y desecha el agua de enjuague de la jarra.",
+        "Añade el café de molienda media. Realiza el Bloom: vierte el doble de agua que de café y déjalo reposar 30 a 45 segundos para la liberación de gases.",
+        "Verter en pulsos controlados y circulares, desde el centro hacia afuera, manteniendo siempre el lecho de café nivelado y sin mojar las paredes del filtro. Repite hasta completar el volumen total.",
+        "El tiempo total de extracción (desde el primer vertido) debe ser de 2 minutos y medio a 3 minutos y medio. Retira el filtro y sirve."
+      ],
+      "image_uri": "asset://assets/images/machines/v60.jpg",
+      "image_source": "asset",
+      "image_alt": "V60",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "kalita_wave",
+      "nombre": "Kalita Wave",
+      "ratio_min": 15,
+      "ratio_max": 16,
+      "molienda": [
+        "media",
+        "media_fina"
+      ],
+      "pasos": [
+        "Coloca y enjuaga el filtro con agua caliente, asegurando que se adhiera bien al fondo plano. Desecha el agua.",
+        "Añade el café. Realiza un Bloom corto (30 segundos) vertiendo una pequeña cantidad de agua.",
+        "Realiza vertidos cortos y muy regulares, enfocándote en el centro del café. Esto previene la canalización gracias a la base plana.",
+        "El tiempo total de extracción debe estar entre 2 a 3 minutos. Retira el filtro y sirve."
+      ],
+      "image_uri": "asset://assets/images/machines/kalita_wave.jpg",
+      "image_source": "asset",
+      "image_alt": "Kalita Wave",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "chemex",
+      "nombre": "Chemex",
+      "ratio_min": 15,
+      "ratio_max": 17,
+      "molienda": [
+        "media"
+      ],
+      "pasos": [
+        "Coloca el filtro grueso en la Chemex, con la parte de triple capa hacia el pico vertedor. Enjuágalo completamente con agua caliente y desecha el agua.",
+        "Añade el café (molienda media, un poco más gruesa que V60) y realiza el Bloom (30-45 segundos).",
+        "Verter en círculos controlados, manteniendo un flujo constante y alto. Asegúrate de solo mojar la cama de café, no las paredes del filtro.",
+        "El tiempo total puede ser más largo, 3:30-5 minutos, debido al grosor del filtro. Retira el filtro y sirve."
+      ],
+      "image_uri": "asset://assets/images/machines/chemex.jpg",
+      "image_source": "asset",
+      "image_alt": "Chemex",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "sifon",
+      "nombre": "Sifón (vacío)",
+      "ratio_min": 14,
+      "ratio_max": 16,
+      "molienda": [
+        "media"
+      ],
+      "pasos": [
+        "Llena el bulbo inferior con agua caliente. Enciende el quemador y coloca el bulbo. El agua subirá a la cámara superior por presión de vapor.",
+        "Una vez que el agua suba, reduce el calor y añade el café de molienda media. Revuelve brevemente (3-5 veces) para saturar.",
+        "Mantén el tiempo de contacto total del café con el agua entre 1:30-2 minutos (contando desde que añades el café).",
+        "Retira la fuente de calor para inducir el descenso del café filtrado al bulbo inferior por vacío. Desmonta y sirve el café del bulbo inferior."
+      ],
+      "image_uri": "asset://assets/images/machines/sifon.jpg",
+      "image_source": "asset",
+      "image_alt": "Sifón de vacío",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "cold_brew",
+      "nombre": "Cold Brew",
+      "ratio_min": 5,
+      "ratio_max": 8,
+      "molienda": [
+        "gruesa"
+      ],
+      "pasos": [
+        "En un recipiente (jarra o filtro), mezcla el café de molienda muy gruesa con agua fría (ratio 1:5 a 1:8 para concentrado). Remueve para asegurar que todo el café esté saturado.",
+        "Tapa el recipiente y refrigéralo en la nevera. Déjalo infusionar durante 12 a 18 horas (más tiempo para mayor intensidad, menos para menos).",
+        "Filtra el concentrado con un filtro fino (malla, tela o papel) para eliminar todos los sedimentos.",
+        "Sirve el concentrado Cold Brew. Generalmente se diluye con agua o leche en una proporción de 1:2 o 1:3, y se sirve con hielo."
+      ],
+      "image_uri": "asset://assets/images/machines/cold_brew.jpg",
+      "image_source": "asset",
+      "image_alt": "Cold Brew",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "espresso_machine",
+      "nombre": "Máquina de espresso",
+      "ratio_min": 1.5,
+      "ratio_max": 2.5,
+      "molienda": [
+        "fina"
+      ],
+      "pasos": [
+        "Purga el grupo (deja correr agua caliente brevemente) para estabilizar la temperatura. Seca y precalienta el portafiltro.",
+        "Dosifica el café de molienda fina, distribuye uniformemente y apisona con fuerza pareja (tamping) para crear un disco plano y compacto.",
+        "Inserta el portafiltro y comienza la extracción. Debe haber un tiempo de contacto de 25-35 segundos para alcanzar el ratio de bebida objetivo (1:1.5 a 1:2.5).",
+        "Observa el flujo. Si es muy rápido/lento, ajusta la molienda, (más fina para ralentizar, más gruesa para acelerar) para mantener el tiempo y flujo en el rango ideal."
+      ],
+      "image_uri": "asset://assets/images/machines/espresso.jpg",
+      "image_source": "asset",
+      "image_alt": "Máquina de espresso",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "phin",
+      "nombre": "Phin vietnamita",
+      "ratio_min": 10,
+      "ratio_max": 14,
+      "molienda": [
+        "media",
+        "media_gruesa"
+      ],
+      "pasos": [
+        "Coloca el Phin (filtro metálico) sobre la taza o vaso (si usas leche condensada, ponla primero).",
+        "Añade el café de molienda media/media-gruesa. Coloca la tapa interna (gravedad o roscada) sin apretar demasiado.",
+        "Realiza una pre-infusión: vierte un chorrito de agua 90 grados y deja asentar 30 segundos. Luego, completa vertiendo el resto del agua.",
+        "El café debe gotear constantemente y la extracción debe durar 4-6 minutos. Retira el Phin, mezcla el café (y la leche condensada, si aplica) y sirve."
+      ],
+      "image_uri": "asset://assets/images/machines/phin.jpg",
+      "image_source": "asset",
+      "image_alt": "Phin vietnamita",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "clever",
+      "nombre": "Clever Dripper",
+      "ratio_min": 15,
+      "ratio_max": 17,
+      "molienda": [
+        "media"
+      ],
+      "pasos": [
+        "Coloca el filtro de papel en el Clever. Enjuágalo con agua caliente y desecha el agua.",
+        "Añade el café de molienda media. Vierte toda el agua necesaria de golpe (ratio 1:15 a 1:17) y revuelve suavemente. La válvula debe estar cerrada, permitiendo la inmersión.",
+        "Deja el café en inmersión total por 2 minutos y medio a 3 minutos y medio.",
+        "Al finalizar el tiempo, coloca el Clever sobre la taza. Esto liberará la válvula y el café comenzará a gotear y filtrar. Retira el Clever y sirve."
+      ],
+      "image_uri": "asset://assets/images/machines/clever.jpg",
+      "image_source": "asset",
+      "image_alt": "Clever Dripper",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    },
+    {
+      "id": "cezve",
+      "nombre": "Cezve/Ibrik (turco)",
+      "ratio_min": 9,
+      "ratio_max": 12,
+      "molienda": [
+        "extrafina"
+      ],
+      "pasos": [
+        "Mezcla en el Cezve el agua fría o a temperatura ambiente, el café de molienda extrafina (polvo) y el azúcar (opcional) en las proporciones deseadas.",
+        "Calienta a fuego lento. Observa la espuma: justo antes de que el líquido hierva y la espuma suba hasta el borde, retira el Cezve del fuego.",
+        "Vuelve a ponerlo al fuego y repite el proceso de levantamiento de espuma 2 o 3 veces.",
+        "Retira definitivamente del fuego, deja reposar brevemente para que el café se asiente en el fondo y sirve el café directamente sin filtrar (con los sedimentos)."
+      ],
+      "image_uri": "asset://assets/images/machines/cezve.jpg",
+      "image_source": "asset",
+      "image_alt": "Cezve turco",
+      "image_credit": "Catálogo base",
+      "image_license": "App internal"
+    }
+  ]
+}

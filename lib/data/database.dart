@@ -4,7 +4,6 @@ import 'package:path/path.dart' as p;
 class AppDb {
   AppDb._();
   static final AppDb instance = AppDb._();
-
   Database? _db;
 
   Future<Database> get db async {
@@ -13,8 +12,7 @@ class AppDb {
     _db = await openDatabase(
       path,
       version: 1,
-      onCreate: (d, v) async {
-        // Tabla de cafeteras 
+      onCreate: (d, _) async {
         await d.execute('''
           CREATE TABLE makers(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,11 +28,10 @@ class AppDb {
           CREATE TABLE recipes(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            body TEXT,
-            created_at TEXT
+            body TEXT
           );
         ''');
-        // Relación receta-cafetera (muchos a muchos)
+
         await d.execute('''
           CREATE TABLE recipe_maker(
             recipe_id INTEGER NOT NULL,
@@ -48,42 +45,50 @@ class AppDb {
   }
 
 
-  Future<int> insertMaker(Map<String, dynamic> m) async {
+  Future<int> insertMaker(Map<String, dynamic> m) async =>
+      (await db).insert('makers', m, conflictAlgorithm: ConflictAlgorithm.replace);
+
+  Future<List<Map<String, dynamic>>> getAllMakers() async =>
+      (await db).query('makers', orderBy: 'id DESC');
+
+  Future<int> updateMaker(int id, Map<String, dynamic> m) async =>
+      (await db).update('makers', m, where: 'id = ?', whereArgs: [id]);
+
+  Future<int> deleteMaker(int id) async =>
+      (await db).delete('makers', where: 'id = ?', whereArgs: [id]);
+
+
+  Future<int> insertRecipe(Map<String, dynamic> r) async =>
+      (await db).insert('recipes', r, conflictAlgorithm: ConflictAlgorithm.replace);
+
+  Future<int> updateRecipe(int id, Map<String, dynamic> r) async =>
+      (await db).update('recipes', r, where: 'id = ?', whereArgs: [id]);
+
+  Future<int> deleteRecipe(int id) async =>
+      (await db).delete('recipes', where: 'id = ?', whereArgs: [id]);
+
+  Future<List<Map<String, dynamic>>> getAllRecipes() async =>
+      (await db).query('recipes', orderBy: 'id DESC');
+
+
+  Future<void> replaceRecipeLinks(int recipeId, List<int> makerIds) async {
     final d = await db;
-    return d.insert('makers', m, conflictAlgorithm: ConflictAlgorithm.replace);
+    final batch = d.batch();
+    batch.delete('recipe_maker', where: 'recipe_id = ?', whereArgs: [recipeId]);
+    for (final m in makerIds) {
+      batch.insert('recipe_maker', {'recipe_id': recipeId, 'maker_id': m},
+          conflictAlgorithm: ConflictAlgorithm.ignore);
+    }
+    await batch.commit(noResult: true);
   }
 
-  Future<List<Map<String, dynamic>>> getAllMakers() async {
-    final d = await db;
-    return d.query('makers', orderBy: 'id DESC');
-  }
-
-  Future<int> deleteMaker(int id) async {
-    final d = await db;
-    return d.delete('makers', where: 'id = ?', whereArgs: [id]);
-  }
-
-  Future<int> updateMaker(int id, Map<String, dynamic> m) async {
-    final d = await db;
-    return d.update('makers', m, where: 'id = ?', whereArgs: [id]);
-  }
-
-  
-  Future<int> insertRecipe(Map<String, dynamic> r) async {
-    final d = await db;
-    return d.insert('recipes', r, conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  Future<List<Map<String, dynamic>>> getAllRecipes() async {
-    final d = await db;
-    return d.query('recipes', orderBy: 'id DESC');
-  }
-
-  Future<void> linkRecipeToMaker(int recipeId, int makerId) async {
-    final d = await db;
-    await d.insert('recipe_maker', {
-      'recipe_id': recipeId,
-      'maker_id': makerId,
-    }, conflictAlgorithm: ConflictAlgorithm.ignore);
+  Future<List<int>> makersForRecipe(int recipeId) async {
+    final rows = await (await db).query(
+      'recipe_maker',
+      columns: ['maker_id'],
+      where: 'recipe_id = ?',
+      whereArgs: [recipeId],
+    );
+    return rows.map((e) => e['maker_id'] as int).toList();
   }
 }

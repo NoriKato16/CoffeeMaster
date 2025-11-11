@@ -72,12 +72,22 @@ flutter:
   uses-material-design: true
  
   assets:
-      - assets/logoCoffeeMaster.jpg
-      - assets/AeroPress.jpg
-      - assets/CafeteraMoka.jpg
-      - assets/PrensaFrancesa.jpg
-      - assets/AddCoffee.jpg
-      - assets/cuestionario.json
+     - assets/images/machines/CafeteraMoka.jpg
+     - assets/images/machines/PrensaFrancesa.jpg
+     - assets/images/machines/AeroPress.jpg
+     - assets/images/machines/v60.jpg
+     - assets/images/machines/kalita_wave.jpg
+     - assets/images/machines/chemex.jpg
+     - assets/images/machines/sifon.jpg
+     - assets/images/machines/cold_brew.jpg
+     - assets/images/machines/espresso.jpg
+     - assets/images/machines/phin.jpg
+     - assets/images/machines/clever.jpg
+     - assets/images/machines/cezve.jpg
+     - assets/logoCoffeeMaster.jpg
+     - assets/cuestionario.json
+     - assets/machines_base.json
+     - assets/recipes_base.json
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

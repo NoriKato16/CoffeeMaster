@@ -1,26 +1,38 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
-
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
+
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Espera 3 segundos y navega al Home
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
+    WidgetsBinding.instance.addPostFrameCallback((_) => _boot());
+  }
+
+  Future<void> _boot() async {
+  
+    try {
+      await precacheImage(
+        const AssetImage('assets/logoCoffeeMaster.jpg'),
         context,
-        MaterialPageRoute(
-          builder: (_) => const HomePage(title: 'Coffee Master'),
-        ),
       );
-    });
+    } catch (e) {
+      debugPrint('No se pudo precargar el logo: $e');
+    }
+
+    
+    await Future.delayed(const Duration(milliseconds: 1200));
+
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const HomePage(title: 'Coffee Master')),
+    );
   }
 
   @override
@@ -30,21 +42,26 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Image(
-              image: AssetImage('assets/logoCoffeeMaster.jpg'),
+          children: [
+            const SizedBox(
               width: 120,
               height: 120,
+              child: Image(
+                image: AssetImage('assets/logoCoffeeMaster.jpg'),
+                fit: BoxFit.contain,
+              ),
             ),
-            SizedBox(height: 20),
-            Text(
-              "Coffee Master",
+            const SizedBox(height: 20),
+            const Text(
+              'Coffee Master',
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Colors.brown,
               ),
             ),
+            const SizedBox(height: 16),
+            const CircularProgressIndicator(),
           ],
         ),
       ),

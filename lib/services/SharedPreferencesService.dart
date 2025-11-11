@@ -3,12 +3,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesService {
   Future<SharedPreferences> get _prefs async => SharedPreferences.getInstance();
 
-  // Claves
-  static const _kUnit = 'unit'; // g o ml
+ 
+  static const _kUnit = 'unit'; 
   static const _kDefaultRatio = 'default_ratio';
   static const _kLastMakerId = 'last_maker_id';
   static const _kFavRecipeIds = 'fav_recipe_ids';
   static const _kUsagePrefix = 'usage_';
+
+  static const _kKeepScreenOn     = 'keep_screen_on';      
+  static const _kOrderRecent      = 'order_recent';        
+  static const _kDefaultMachineId = 'default_machine_id';  
+  static const _kTextScale        = 'text_scale';          
+
 
   Future<void> setUnit(String v) async {
     final p = await _prefs;
@@ -34,6 +40,7 @@ class SharedPreferencesService {
     await p.setStringList(_kFavRecipeIds, ids);
   }
 
+
   Future<String> unit() async {
     final p = await _prefs;
     return p.getString(_kUnit) ?? 'g';
@@ -53,6 +60,7 @@ class SharedPreferencesService {
     final p = await _prefs;
     return p.getStringList(_kFavRecipeIds) ?? <String>[];
   }
+
 
   static String formatRatio(double r) {
     final isInt = r.truncateToDouble() == r;
@@ -79,11 +87,58 @@ class SharedPreferencesService {
     await p.setInt(k, v + 1);
   }
 
-  // Para reiniciar el contador de usos de una cafetera.
   Future<void> resetUsage(String makerId) async {
     final p = await _prefs;
     await p.remove('$_kUsagePrefix$makerId');
   }
 
   static String joinCommaIds(List<String> ids) => ids.join(', ');
+
+ 
+  Future<bool> keepScreenOn() async {
+    final p = await _prefs;
+    return p.getBool(_kKeepScreenOn) ?? true;
+  }
+
+  Future<void> setKeepScreenOn(bool v) async {
+    final p = await _prefs;
+    await p.setBool(_kKeepScreenOn, v);
+  }
+
+  
+  Future<bool> orderByRecent() async {
+    final p = await _prefs;
+    return p.getBool(_kOrderRecent) ?? true;
+  }
+
+  Future<void> setOrderByRecent(bool v) async {
+    final p = await _prefs;
+    await p.setBool(_kOrderRecent, v);
+  }
+
+  
+  Future<String?> defaultMachineId() async {
+    final p = await _prefs;
+    return p.getString(_kDefaultMachineId);
+  }
+
+  Future<void> setDefaultMachineId(String? id) async {
+    final p = await _prefs;
+    if (id == null || id.isEmpty) {
+      await p.remove(_kDefaultMachineId);
+    } else {
+      await p.setString(_kDefaultMachineId, id);
+    }
+  }
+
+ 
+  Future<double> textScale() async {
+    final p = await _prefs;
+    return p.getDouble(_kTextScale) ?? 1.0; 
+  }
+
+  Future<void> setTextScale(double v) async {
+    final p = await _prefs;
+    await p.setDouble(_kTextScale, v);
+  }
 }
