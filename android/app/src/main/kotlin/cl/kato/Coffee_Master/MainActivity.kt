@@ -1,4 +1,4 @@
-package com.example.flutter_lab2
+package cl.kato.Coffee_Master
 
 import io.flutter.embedding.android.FlutterActivity
 

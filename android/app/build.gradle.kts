@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.flutter_lab2"
+    namespace = "cl.kato.Coffee_Master"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     defaultConfig {
-        applicationId = "com.example.flutter_lab2"
-        minSdk = flutter.minSdkVersion      // debe ser >= 21
+        applicationId = "cl.kato.Coffee_Master"
+        minSdk = flutter.minSdkVersion      
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
